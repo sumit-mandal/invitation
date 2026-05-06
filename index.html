@@ -15,6 +15,7 @@
         html, body {
             height: 100%;
             overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -29,7 +30,7 @@
 
         .book-container {
             width: 600px;
-            height: 92vh;
+            height: 96vh;
             position: relative;
             transform-style: preserve-3d;
         }
@@ -157,10 +158,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 50px 45px;
+            justify-content: flex-start;
+            padding: 40px 40px 35px;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .inner-page::before {
@@ -217,12 +219,12 @@
             letter-spacing: 5px;
             text-transform: uppercase;
             color: rgba(201, 169, 110, 0.5);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .invite-heading {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 34px;
+            font-size: 30px;
             font-weight: 300;
             color: #c9a96e;
             margin-bottom: 5px;
@@ -237,7 +239,7 @@
         }
 
         .house-icon {
-            margin: 12px auto;
+            margin: 8px auto;
             opacity: 0.8;
         }
 
@@ -245,16 +247,16 @@
             width: 60px;
             height: 0.5px;
             background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.5), transparent);
-            margin: 0 auto 20px;
+            margin: 0 auto 12px;
         }
 
         .invite-body {
             font-size: 12px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.6);
-            line-height: 2;
+            line-height: 1.8;
             letter-spacing: 0.5px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .invite-body strong {
@@ -265,9 +267,9 @@
         .details-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-            padding: 22px 15px;
+            gap: 15px;
+            margin-bottom: 18px;
+            padding: 16px 15px;
             border-top: 0.5px solid rgba(201, 169, 110, 0.15);
             border-bottom: 0.5px solid rgba(201, 169, 110, 0.15);
         }
@@ -297,10 +299,11 @@
         }
 
         .address-block {
-            margin: 15px 0 20px;
-            padding: 18px 35px;
+            margin: 0;
+            padding: 14px 20px;
             border-left: 1px solid rgba(201, 169, 110, 0.3);
             text-align: left;
+            flex: 1;
         }
 
         .address-text {
@@ -317,38 +320,47 @@
             margin-top: 6px;
         }
 
+        .venue-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0 15px;
+            width: 100%;
+        }
+
         .qr-section {
-            margin: 15px auto;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
         }
 
         .qr-wrapper {
-            padding: 12px;
+            padding: 10px;
             background: rgba(255, 255, 255, 0.03);
             border: 0.5px solid rgba(201, 169, 110, 0.15);
             border-radius: 2px;
-            display: inline-block;
         }
 
         .qr-text {
             font-size: 8px;
-            letter-spacing: 4px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             color: rgba(201, 169, 110, 0.4);
             margin-top: 12px;
         }
 
         .hosted-by {
-            margin-top: 18px;
+            margin-top: 14px;
             text-align: center;
         }
 
         .host-names {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
-            letter-spacing: 1px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #c9a96e;
+            letter-spacing: 1.5px;
         }
 
         .closing {
@@ -359,7 +371,7 @@
         }
 
         .diya-group {
-            margin: 15px 0;
+            margin: 10px 0;
             font-size: 18px;
             display: flex;
             justify-content: center;
@@ -379,17 +391,14 @@
         }
 
         .nav-hint {
-            position: absolute;
-            bottom: 30px;
             font-size: 9px;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: rgba(201, 169, 110, 0.3);
             z-index: 10;
+            margin-top: 15px;
+            text-align: center;
         }
-
-        .nav-hint.right { right: 35px; }
-        .nav-hint.left { left: 35px; }
 
         /* Hindi page styles */
         .hindi-heading {
@@ -398,6 +407,7 @@
             font-weight: 600;
             color: #c9a96e;
             margin-bottom: 8px;
+            letter-spacing: 0;
         }
 
         .hindi-sub {
@@ -427,6 +437,7 @@
             font-size: 16px;
             font-weight: 400;
             color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 0;
         }
 
         .hindi-detail-val.highlight {
@@ -462,9 +473,22 @@
         .hindi-label {
             font-family: 'Noto Sans Devanagari', sans-serif;
             font-size: 9px;
-            letter-spacing: 3px;
+            letter-spacing: 0.5px;
             color: rgba(201, 169, 110, 0.4);
             margin-bottom: 6px;
+        }
+
+        .inner-page::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .inner-page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .inner-page::-webkit-scrollbar-thumb {
+            background: rgba(201, 169, 110, 0.2);
+            border-radius: 3px;
         }
 
         /* Floating particles */
@@ -820,7 +844,7 @@
         <div class="curtain-glow"></div>
 
         <div class="curtain-text">
-            <div class="ct-om">&#x0950;</div>
+            <!-- <div class="ct-om">&#x0950;</div> -->
             <div class="ct-main">Griha Pravesh</div>
             <div class="ct-hindi">शुभ गृह प्रवेश</div>
             <div class="ct-tap">tap to unveil</div>
@@ -897,47 +921,47 @@
                             <div class="detail-val">Wednesday</div>
                         </div>
                         <div class="detail-block">
-                            <div class="detail-label">Time</div>
-                            <div class="detail-val">Post 7:00 PM</div>
+                            <div class="detail-label">Housewarming Ceremony</div>
+                            <div class="detail-val">11:00 AM</div>
                         </div>
                         <div class="detail-block">
-                            <div class="detail-label">Followed By</div>
-                            <div class="detail-val">Dinner</div>
+                            <div class="detail-label">Dinner</div>
+                            <div class="detail-val">Post 7:00 PM</div>
                         </div>
                     </div>
 
-                    <div class="address-block">
-                        <div class="detail-label" style="margin-bottom: 8px;">Venue</div>
-                        <div class="address-text">
-                            Street 4, Sainagar, Katulbod<br>
-                            Durg, Chhattisgarh
+                    <div class="venue-row">
+                        <div class="address-block">
+                            <div class="detail-label" style="margin-bottom: 8px;">Venue</div>
+                            <div class="address-text">
+                                Street 4, Sainagar, Katulbod<br>
+                                Durg, Chhattisgarh
+                            </div>
+                            <div class="address-landmark">Near Jharokha — The Wedding Palace</div>
                         </div>
-                        <div class="address-landmark">Near Jharokha — The Wedding Palace</div>
-                    </div>
-
-                    <div class="qr-section">
-                        <div class="qr-wrapper">
-                            <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 110px; height: 110px; display: block;">
+                        <div class="qr-section">
+                            <div class="qr-wrapper">
+                                <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
+                            </div>
+                            <div class="qr-text">Scan for directions</div>
                         </div>
-                        <div class="qr-text">Scan for Google Maps directions</div>
                     </div>
 
                     <div class="hosted-by">
                         <div class="detail-label" style="margin-bottom: 6px;">Hosted By</div>
-                        <div class="host-names">Sanjit Mandal & Nisha Mandal</div>
+                        <div class="host-names">Sanjit Mandal &amp; Nisha Mandal</div>
                     </div>
 
-                    <div class="closing">Atithi Devo Bhava</div>
+                    <div class="nav-hint">tap to turn →</div>
                 </div>
 
-                <div class="nav-hint right">tap to turn →</div>
                 <div class="page-shadow"></div>
             </div>
             <div class="page-back" style="background: #0d0d0d;"></div>
         </div>
 
         <!-- Page 3: Hindi Invitation -->
-        <div class="page" id="page3">
+        <div class="page" id="page3" onclick="turnPage(3)">
             <div class="page-front inner-page">
                 <div class="inner-border"></div>
                 <div class="gold-corner tl"></div>
@@ -947,7 +971,7 @@
                 <div class="particles" id="particles-hindi"></div>
 
                 <div class="inner-content" style="padding: 0 10px;">
-                    <div class="section-label" style="margin-bottom: 10px;">|| शुभ निमंत्रण ||</div>
+                    <div class="section-label" style="margin-bottom: 10px; letter-spacing: 1px;">|| शुभ निमंत्रण ||</div>
 
                     <h2 class="hindi-heading" style="font-size: 28px; margin-bottom: 4px;">गृह प्रवेश</h2>
                     <p class="hindi-sub" style="font-size: 16px; margin-bottom: 10px;">शुभ समारोह</p>
@@ -987,45 +1011,48 @@
                             <div class="hindi-detail-val">बुधवार</div>
                         </div>
                         <div class="detail-block">
-                            <div class="hindi-label">समय</div>
-                            <div class="hindi-detail-val">सायं 7:00 बजे के पश्चात</div>
+                            <div class="hindi-label">गृह प्रवेश समारोह</div>
+                            <div class="hindi-detail-val">प्रातः 11:00 बजे</div>
                         </div>
                         <div class="detail-block">
-                            <div class="hindi-label">उपरांत</div>
-                            <div class="hindi-detail-val">रात्रि भोज</div>
+                            <div class="hindi-label">रात्रि भोज</div>
+                            <div class="hindi-detail-val">सायं 7:00 बजे के पश्चात</div>
                         </div>
                     </div>
 
-                    <div class="address-block" style="margin: 10px 0 12px; padding: 12px 30px;">
-                        <div class="hindi-label" style="margin-bottom: 6px;">स्थान</div>
-                        <div class="hindi-address">
-                            स्ट्रीट 4, साईनगर, कातुलबोड़<br>
-                            दुर्ग, छत्तीसगढ़
+                    <div class="venue-row">
+                        <div class="address-block" style="margin: 0; padding: 12px 20px;">
+                            <div class="hindi-label" style="margin-bottom: 6px;">स्थान</div>
+                            <div class="hindi-address">
+                                स्ट्रीट 4, साईनगर, कातुलबोड़<br>
+                                दुर्ग, छत्तीसगढ़
+                            </div>
+                            <div class="hindi-landmark">झरोखा - द वेडिंग पैलेस के निकट</div>
                         </div>
-                        <div class="hindi-landmark">झरोखा - द वेडिंग पैलेस के निकट</div>
-                    </div>
-
-                    <div class="qr-section" style="margin: 10px auto;">
-                        <div class="qr-wrapper" style="padding: 8px;">
-                            <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 90px; height: 90px; display: block;">
+                        <div class="qr-section">
+                            <div class="qr-wrapper" style="padding: 8px;">
+                                <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
+                            </div>
+                            <div class="qr-text">स्कैन करें</div>
                         </div>
-                        <div class="qr-text">Google Maps के लिए स्कैन करें</div>
                     </div>
 
                     <div class="hosted-by" style="margin-top: 10px;">
-                        <div class="hindi-label" style="margin-bottom: 4px;">आयोजक</div>
-                        <div class="host-names">संजीत मंडल एवं निशा मंडल</div>
+                        <div class="hindi-label" style="margin-bottom: 4px;">विनीत</div>
+                        <div class="host-names">संजित मंडल एवं निशा मंडल</div>
                     </div>
 
-                    <div class="hindi-closing" style="margin-top: 10px;">अतिथि देवो भवः</div>
+                    <div class="nav-hint">tap to start over ↺</div>
                 </div>
 
-                <div class="nav-hint left">← tap English page to go back</div>
             </div>
         </div>
     </div>
 
     <script>
+        let currentPage = 0;
+        const totalPages = 3;
+
         function openCurtain() {
             const curtain = document.getElementById('curtain');
             curtain.classList.add('open');
@@ -1035,8 +1062,23 @@
         }
 
         function turnPage(pageNum) {
+            if (pageNum === 3) {
+                resetAllPages();
+                return;
+            }
             const page = document.getElementById('page' + pageNum);
             page.classList.toggle('turned');
+        }
+
+        function resetAllPages() {
+            const page2 = document.getElementById('page2');
+            const page1 = document.getElementById('page1');
+
+            page2.classList.remove('turned');
+
+            setTimeout(() => {
+                page1.classList.remove('turned');
+            }, 800);
         }
 
         function createParticles(containerId, count) {
