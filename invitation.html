@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housewarming Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500&family=Great+Vibes&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: #0a0a0a;
+            font-family: 'Montserrat', sans-serif;
+            perspective: 2000px;
+        }
+
+        .book-container {
+            width: 600px;
+            height: 92vh;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-origin: left center;
+            transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 2px;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+        }
+
+        .page.turned {
+            transform: rotateY(-180deg);
+        }
+
+        #page1 { z-index: 3; }
+        #page2 { z-index: 2; }
+        #page3 { z-index: 1; }
+
+        /* Cover Page */
+        .cover {
+            background: #0d0d0d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
+        }
+
+        .cover-border {
+            position: absolute;
+            inset: 20px;
+            border: 0.5px solid rgba(201, 169, 110, 0.3);
+        }
+
+        .cover-border-inner {
+            position: absolute;
+            inset: 28px;
+            border: 0.5px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .cover-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .cover-om {
+            font-size: 56px;
+            color: #c9a96e;
+            margin-bottom: 30px;
+            animation: breathe 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .cover-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 50px;
+            font-weight: 300;
+            color: #c9a96e;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .cover-subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 26px;
+            color: rgba(201, 169, 110, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .cover-line {
+            width: 120px;
+            height: 0.5px;
+            background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+            margin: 25px auto;
+        }
+
+        .cover-tap {
+            position: absolute;
+            bottom: 50px;
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Inner Page */
+        .inner-page {
+            background: #0d0d0d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inner-page::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at top, rgba(201, 169, 110, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(201, 169, 110, 0.02) 0%, transparent 50%);
+        }
+
+        .inner-border {
+            position: absolute;
+            inset: 18px;
+            border: 0.5px solid rgba(201, 169, 110, 0.2);
+        }
+
+        .gold-corner {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+        }
+
+        .gold-corner::before, .gold-corner::after {
+            content: '';
+            position: absolute;
+            background: rgba(201, 169, 110, 0.5);
+        }
+
+        .gold-corner.tl { top: 24px; left: 24px; }
+        .gold-corner.tl::before { width: 18px; height: 0.5px; top: 0; left: 0; }
+        .gold-corner.tl::after { width: 0.5px; height: 18px; top: 0; left: 0; }
+
+        .gold-corner.tr { top: 24px; right: 24px; }
+        .gold-corner.tr::before { width: 18px; height: 0.5px; top: 0; right: 0; }
+        .gold-corner.tr::after { width: 0.5px; height: 18px; top: 0; right: 0; }
+
+        .gold-corner.bl { bottom: 24px; left: 24px; }
+        .gold-corner.bl::before { width: 18px; height: 0.5px; bottom: 0; left: 0; }
+        .gold-corner.bl::after { width: 0.5px; height: 18px; bottom: 0; left: 0; }
+
+        .gold-corner.br { bottom: 24px; right: 24px; }
+        .gold-corner.br::before { width: 18px; height: 0.5px; bottom: 0; right: 0; }
+        .gold-corner.br::after { width: 0.5px; height: 18px; bottom: 0; right: 0; }
+
+        .inner-content {
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .section-label {
+            font-size: 9px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.5);
+            margin-bottom: 15px;
+        }
+
+        .invite-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 300;
+            color: #c9a96e;
+            margin-bottom: 5px;
+            letter-spacing: 4px;
+        }
+
+        .invite-sub {
+            font-family: 'Great Vibes', cursive;
+            font-size: 22px;
+            color: rgba(201, 169, 110, 0.6);
+            margin-bottom: 20px;
+        }
+
+        .house-icon {
+            margin: 12px auto;
+            opacity: 0.8;
+        }
+
+        .thin-line {
+            width: 60px;
+            height: 0.5px;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.5), transparent);
+            margin: 0 auto 20px;
+        }
+
+        .invite-body {
+            font-size: 12px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 2;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .invite-body strong {
+            color: rgba(201, 169, 110, 0.9);
+            font-weight: 400;
+        }
+
+        .details-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 22px 15px;
+            border-top: 0.5px solid rgba(201, 169, 110, 0.15);
+            border-bottom: 0.5px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .detail-block {
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.4);
+            margin-bottom: 6px;
+        }
+
+        .detail-val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .detail-val.highlight {
+            color: #c9a96e;
+            font-size: 20px;
+        }
+
+        .address-block {
+            margin: 15px 0 20px;
+            padding: 18px 35px;
+            border-left: 1px solid rgba(201, 169, 110, 0.3);
+            text-align: left;
+        }
+
+        .address-text {
+            font-size: 12px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+        }
+
+        .address-landmark {
+            font-size: 11px;
+            color: rgba(201, 169, 110, 0.5);
+            font-style: italic;
+            margin-top: 6px;
+        }
+
+        .qr-section {
+            margin: 15px auto;
+            text-align: center;
+        }
+
+        .qr-wrapper {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(201, 169, 110, 0.15);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .qr-text {
+            font-size: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.4);
+            margin-top: 12px;
+        }
+
+        .hosted-by {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .host-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 1px;
+        }
+
+        .closing {
+            font-family: 'Great Vibes', cursive;
+            font-size: 20px;
+            color: rgba(201, 169, 110, 0.7);
+            margin-top: 15px;
+        }
+
+        .diya-group {
+            margin: 15px 0;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .diya-group span {
+            animation: flicker 2.5s ease-in-out infinite alternate;
+        }
+
+        .diya-group span:nth-child(2) { animation-delay: 0.8s; }
+        .diya-group span:nth-child(3) { animation-delay: 1.6s; }
+
+        @keyframes flicker {
+            0% { opacity: 0.6; filter: brightness(0.8); }
+            100% { opacity: 1; filter: brightness(1.2); }
+        }
+
+        .nav-hint {
+            position: absolute;
+            bottom: 30px;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.3);
+            z-index: 10;
+        }
+
+        .nav-hint.right { right: 35px; }
+        .nav-hint.left { left: 35px; }
+
+        /* Hindi page styles */
+        .hindi-heading {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #c9a96e;
+            margin-bottom: 8px;
+        }
+
+        .hindi-sub {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            color: rgba(201, 169, 110, 0.6);
+            margin-bottom: 20px;
+        }
+
+        .hindi-body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 2.2;
+            margin-bottom: 20px;
+        }
+
+        .hindi-body strong {
+            color: rgba(201, 169, 110, 0.9);
+            font-weight: 500;
+        }
+
+        .hindi-detail-val {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .hindi-detail-val.highlight {
+            color: #c9a96e;
+            font-size: 19px;
+            font-weight: 500;
+        }
+
+        .hindi-address {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.9;
+        }
+
+        .hindi-landmark {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 11px;
+            color: rgba(201, 169, 110, 0.5);
+            font-style: italic;
+            margin-top: 6px;
+        }
+
+        .hindi-closing {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(201, 169, 110, 0.7);
+            margin-top: 20px;
+        }
+
+        .hindi-label {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(201, 169, 110, 0.4);
+            margin-bottom: 6px;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(201, 169, 110, 0.4);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            25% { opacity: 0.6; }
+            50% { transform: translateY(-100px) translateX(20px); opacity: 0.3; }
+            75% { opacity: 0.5; }
+            100% { transform: translateY(-200px) translateX(-10px); opacity: 0; }
+        }
+
+        .page-shadow {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .page:hover .page-shadow {
+            opacity: 1;
+        }
+
+        .page.turned .page-shadow {
+            opacity: 0;
+        }
+
+        /* Theatre Curtain Overlay */
+        .curtain-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: all;
+            cursor: pointer;
+            overflow: hidden;
+            background: #0a0000;
+        }
+
+        /* Theatre frame / proscenium arch */
+        .theatre-frame {
+            position: absolute;
+            inset: 0;
+            border: 14px solid transparent;
+            border-image: linear-gradient(180deg, #f0d890, #c9a96e, #6b4e1f, #c9a96e, #f0d890) 1;
+            z-index: 12;
+            pointer-events: none;
+        }
+
+        .theatre-frame::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: -14px;
+            right: -14px;
+            height: 40px;
+            background: linear-gradient(180deg, #1a0a00, #3d1500, #1a0a00);
+            border-bottom: 3px solid #c9a96e;
+        }
+
+        /* Pelmet / valance at top */
+        .curtain-pelmet {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            z-index: 13;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .curtain-pelmet svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Main curtain panels */
+        .curtain-left, .curtain-right {
+            position: absolute;
+            top: 0;
+            width: 52%;
+            height: 100%;
+            transition: transform 2.5s cubic-bezier(0.7, 0, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .curtain-left { left: 0; }
+        .curtain-right { right: 0; }
+
+        /* SVG curtain shapes for curved draping */
+        .curtain-left svg, .curtain-right svg {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .curtain-overlay.open .curtain-left {
+            transform: translateX(-100%);
+        }
+
+        .curtain-overlay.open .curtain-right {
+            transform: translateX(100%);
+        }
+
+        .curtain-overlay.hidden {
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        /* Centre glow behind curtain gap */
+        .curtain-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 100%;
+            background: rgba(201, 169, 110, 0.1);
+            filter: blur(10px);
+            z-index: 1;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.2; width: 4px; }
+            50% { opacity: 0.6; width: 10px; }
+        }
+
+        .curtain-overlay.open .curtain-glow {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        /* Centre text */
+        .curtain-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 14;
+            text-align: center;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .curtain-overlay.open .curtain-text {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.85);
+        }
+
+        .curtain-text .ct-om {
+            font-size: 50px;
+            color: #c9a96e;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(201, 169, 110, 0.6), 0 0 60px rgba(201, 169, 110, 0.2);
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        .curtain-text .ct-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 300;
+            color: rgba(201, 169, 110, 0.9);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(201, 169, 110, 0.3);
+        }
+
+        .curtain-text .ct-hindi {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(201, 169, 110, 0.5);
+            margin-bottom: 25px;
+        }
+
+        .curtain-text .ct-tap {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Shimmer on curtain SVG */
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theatre Curtain Overlay -->
+    <div class="curtain-overlay" id="curtain" onclick="openCurtain()">
+        <div class="theatre-frame"></div>
+
+        <!-- Left curtain with SVG curved drape -->
+        <div class="curtain-left">
+            <svg viewBox="0 0 550 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="foldL1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#3d0808"/>
+                        <stop offset="20%" stop-color="#8b1a1a"/>
+                        <stop offset="40%" stop-color="#5c0a0a"/>
+                        <stop offset="55%" stop-color="#9b2020"/>
+                        <stop offset="70%" stop-color="#4a0606"/>
+                        <stop offset="85%" stop-color="#7a1515"/>
+                        <stop offset="100%" stop-color="#2a0303"/>
+                    </linearGradient>
+                    <linearGradient id="goldTrimL" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#f0d890"/>
+                        <stop offset="25%" stop-color="#c9a96e"/>
+                        <stop offset="50%" stop-color="#8a6d3b"/>
+                        <stop offset="75%" stop-color="#c9a96e"/>
+                        <stop offset="100%" stop-color="#f0d890"/>
+                    </linearGradient>
+                    <filter id="shadowL">
+                        <feDropShadow dx="3" dy="0" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+                    </filter>
+                </defs>
+                <!-- Main fabric shape with curves -->
+                <path d="M0,0 L520,0
+                    C510,40 540,80 530,120
+                    C520,160 545,200 535,240
+                    C525,280 550,320 540,360
+                    C530,400 548,440 538,480
+                    C528,520 550,560 540,600
+                    C530,640 545,680 535,720
+                    C525,760 548,800 538,840
+                    C528,880 545,920 535,960
+                    L530,1000 L0,1000 Z"
+                    fill="url(#foldL1)" filter="url(#shadowL)"/>
+                <!-- Curved fold highlights -->
+                <path d="M100,0 C95,200 110,400 100,600 C90,800 105,1000 100,1000" stroke="rgba(180,80,80,0.2)" stroke-width="30" fill="none"/>
+                <path d="M200,0 C210,150 190,350 205,500 C215,650 195,850 200,1000" stroke="rgba(0,0,0,0.15)" stroke-width="25" fill="none"/>
+                <path d="M320,0 C310,180 330,380 315,550 C305,720 325,880 320,1000" stroke="rgba(180,80,80,0.15)" stroke-width="20" fill="none"/>
+                <path d="M430,0 C440,200 425,400 435,600 C445,800 430,950 435,1000" stroke="rgba(0,0,0,0.2)" stroke-width="22" fill="none"/>
+                <!-- Gold trim on inner edge -->
+                <path d="M520,0 C510,40 540,80 530,120 C520,160 545,200 535,240 C525,280 550,320 540,360 C530,400 548,440 538,480 C528,520 550,560 540,600 C530,640 545,680 535,720 C525,760 548,800 538,840 C528,880 545,920 535,960 L530,1000"
+                    stroke="url(#goldTrimL)" stroke-width="4" fill="none" opacity="0.8"/>
+                <!-- Shimmer highlight -->
+                <path d="M350,0 C360,200 340,500 355,750 C365,900 350,1000 355,1000"
+                    stroke="rgba(255,200,100,0.06)" stroke-width="60" fill="none">
+                    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4s" repeatCount="indefinite"/>
+                </path>
+            </svg>
+        </div>
+
+        <!-- Right curtain with SVG curved drape -->
+        <div class="curtain-right">
+            <svg viewBox="0 0 550 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="foldR1" x1="100%" y1="0%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#3d0808"/>
+                        <stop offset="20%" stop-color="#8b1a1a"/>
+                        <stop offset="40%" stop-color="#5c0a0a"/>
+                        <stop offset="55%" stop-color="#9b2020"/>
+                        <stop offset="70%" stop-color="#4a0606"/>
+                        <stop offset="85%" stop-color="#7a1515"/>
+                        <stop offset="100%" stop-color="#2a0303"/>
+                    </linearGradient>
+                    <linearGradient id="goldTrimR" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#f0d890"/>
+                        <stop offset="25%" stop-color="#c9a96e"/>
+                        <stop offset="50%" stop-color="#8a6d3b"/>
+                        <stop offset="75%" stop-color="#c9a96e"/>
+                        <stop offset="100%" stop-color="#f0d890"/>
+                    </linearGradient>
+                    <filter id="shadowR">
+                        <feDropShadow dx="-3" dy="0" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+                    </filter>
+                </defs>
+                <!-- Main fabric shape with curves (mirrored) -->
+                <path d="M550,0 L30,0
+                    C40,40 10,80 20,120
+                    C30,160 5,200 15,240
+                    C25,280 0,320 10,360
+                    C20,400 2,440 12,480
+                    C22,520 0,560 10,600
+                    C20,640 5,680 15,720
+                    C25,760 2,800 12,840
+                    C22,880 5,920 15,960
+                    L20,1000 L550,1000 Z"
+                    fill="url(#foldR1)" filter="url(#shadowR)"/>
+                <!-- Curved fold highlights -->
+                <path d="M450,0 C455,200 440,400 450,600 C460,800 445,1000 450,1000" stroke="rgba(180,80,80,0.2)" stroke-width="30" fill="none"/>
+                <path d="M350,0 C340,150 360,350 345,500 C335,650 355,850 350,1000" stroke="rgba(0,0,0,0.15)" stroke-width="25" fill="none"/>
+                <path d="M230,0 C240,180 220,380 235,550 C245,720 225,880 230,1000" stroke="rgba(180,80,80,0.15)" stroke-width="20" fill="none"/>
+                <path d="M120,0 C110,200 125,400 115,600 C105,800 120,950 115,1000" stroke="rgba(0,0,0,0.2)" stroke-width="22" fill="none"/>
+                <!-- Gold trim on inner edge -->
+                <path d="M30,0 C40,40 10,80 20,120 C30,160 5,200 15,240 C25,280 0,320 10,360 C20,400 2,440 12,480 C22,520 0,560 10,600 C20,640 5,680 15,720 C25,760 2,800 12,840 C22,880 5,920 15,960 L20,1000"
+                    stroke="url(#goldTrimR)" stroke-width="4" fill="none" opacity="0.8"/>
+                <!-- Shimmer highlight -->
+                <path d="M200,0 C190,200 210,500 195,750 C185,900 200,1000 195,1000"
+                    stroke="rgba(255,200,100,0.06)" stroke-width="60" fill="none">
+                    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4s" repeatCount="indefinite" begin="2s"/>
+                </path>
+            </svg>
+        </div>
+
+        <!-- Pelmet / valance at top -->
+        <div class="curtain-pelmet">
+            <svg viewBox="0 0 1000 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="pelmetGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#4a0808"/>
+                        <stop offset="50%" stop-color="#8b1a1a"/>
+                        <stop offset="100%" stop-color="#3d0505"/>
+                    </linearGradient>
+                </defs>
+                <path d="M0,0 L1000,0 L1000,40
+                    Q900,90 800,50 Q700,90 600,55 Q500,95 400,55 Q300,90 200,50 Q100,90 0,40 Z"
+                    fill="url(#pelmetGrad)"/>
+                <path d="M0,40 Q100,90 200,50 Q300,90 400,55 Q500,95 600,55 Q700,90 800,50 Q900,90 1000,40"
+                    stroke="#c9a96e" stroke-width="2" fill="none" opacity="0.6"/>
+                <!-- Gold fringe dots -->
+                <circle cx="100" cy="75" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="200" cy="68" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="300" cy="75" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="400" cy="70" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="500" cy="78" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="600" cy="70" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="700" cy="75" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="800" cy="68" r="3" fill="#c9a96e" opacity="0.5"/>
+                <circle cx="900" cy="75" r="3" fill="#c9a96e" opacity="0.5"/>
+            </svg>
+        </div>
+
+        <div class="curtain-glow"></div>
+
+        <div class="curtain-text">
+            <div class="ct-om">&#x0950;</div>
+            <div class="ct-main">Griha Pravesh</div>
+            <div class="ct-hindi">शुभ गृह प्रवेश</div>
+            <div class="ct-tap">tap to unveil</div>
+        </div>
+    </div>
+
+    <div class="book-container">
+        <!-- Page 1: Cover -->
+        <div class="page" id="page1" onclick="turnPage(1)">
+            <div class="page-front cover">
+                <div class="cover-border"></div>
+                <div class="cover-border-inner"></div>
+                <div class="particles" id="particles-cover"></div>
+                <div class="cover-content">
+                    <div class="cover-om">&#x0950;</div>
+                    <div class="cover-line"></div>
+                    <h1 class="cover-title">Griha Pravesh</h1>
+                    <p class="cover-subtitle">A New Beginning</p>
+                    <div class="cover-line"></div>
+                </div>
+                <div class="cover-tap">Tap to open</div>
+                <div class="page-shadow"></div>
+            </div>
+            <div class="page-back" style="background: #0d0d0d;"></div>
+        </div>
+
+        <!-- Page 2: English Invitation -->
+        <div class="page" id="page2" onclick="turnPage(2)">
+            <div class="page-front inner-page">
+                <div class="inner-border"></div>
+                <div class="gold-corner tl"></div>
+                <div class="gold-corner tr"></div>
+                <div class="gold-corner bl"></div>
+                <div class="gold-corner br"></div>
+                <div class="particles" id="particles-inner"></div>
+
+                <div class="inner-content">
+                    <div class="section-label">You are invited</div>
+
+                    <h2 class="invite-heading">HOUSEWARMING</h2>
+                    <p class="invite-sub">Ceremony</p>
+
+                    <div class="house-icon">
+                        <svg width="50" height="50" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M32 4L4 28H12V56H26V40H38V56H52V28H60L32 4Z" stroke="#c9a96e" stroke-width="2" fill="none" opacity="0.6"/>
+                            <rect x="28" y="20" width="8" height="8" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity="0.4"/>
+                            <path d="M32 4L4 28" stroke="#c9a96e" stroke-width="2" opacity="0.6"/>
+                            <path d="M32 4L60 28" stroke="#c9a96e" stroke-width="2" opacity="0.6"/>
+                        </svg>
+                    </div>
+
+                    <div class="thin-line"></div>
+
+                    <p class="invite-body">
+                        With the blessings of the Almighty<br>
+                        we cordially invite you & your family to grace<br>
+                        the auspicious occasion of our<br>
+                        <strong>Griha Pravesh Ceremony</strong>
+                    </p>
+
+                    <div class="diya-group">
+                        <span>🪔</span>
+                        <span>🪔</span>
+                        <span>🪔</span>
+                    </div>
+
+                    <div class="details-row">
+                        <div class="detail-block">
+                            <div class="detail-label">Date</div>
+                            <div class="detail-val highlight">June 17, 2026</div>
+                        </div>
+                        <div class="detail-block">
+                            <div class="detail-label">Day</div>
+                            <div class="detail-val">Wednesday</div>
+                        </div>
+                        <div class="detail-block">
+                            <div class="detail-label">Time</div>
+                            <div class="detail-val">Post 7:00 PM</div>
+                        </div>
+                        <div class="detail-block">
+                            <div class="detail-label">Followed By</div>
+                            <div class="detail-val">Dinner</div>
+                        </div>
+                    </div>
+
+                    <div class="address-block">
+                        <div class="detail-label" style="margin-bottom: 8px;">Venue</div>
+                        <div class="address-text">
+                            Street 4, Sainagar, Katulbod<br>
+                            Durg, Chhattisgarh
+                        </div>
+                        <div class="address-landmark">Near Jharokha — The Wedding Palace</div>
+                    </div>
+
+                    <div class="qr-section">
+                        <div class="qr-wrapper">
+                            <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 110px; height: 110px; display: block;">
+                        </div>
+                        <div class="qr-text">Scan for Google Maps directions</div>
+                    </div>
+
+                    <div class="hosted-by">
+                        <div class="detail-label" style="margin-bottom: 6px;">Hosted By</div>
+                        <div class="host-names">Sanjit Mandal & Nisha Mandal</div>
+                    </div>
+
+                    <div class="closing">Atithi Devo Bhava</div>
+                </div>
+
+                <div class="nav-hint right">tap to turn →</div>
+                <div class="page-shadow"></div>
+            </div>
+            <div class="page-back" style="background: #0d0d0d;"></div>
+        </div>
+
+        <!-- Page 3: Hindi Invitation -->
+        <div class="page" id="page3">
+            <div class="page-front inner-page">
+                <div class="inner-border"></div>
+                <div class="gold-corner tl"></div>
+                <div class="gold-corner tr"></div>
+                <div class="gold-corner bl"></div>
+                <div class="gold-corner br"></div>
+                <div class="particles" id="particles-hindi"></div>
+
+                <div class="inner-content" style="padding: 0 10px;">
+                    <div class="section-label" style="margin-bottom: 10px;">|| शुभ निमंत्रण ||</div>
+
+                    <h2 class="hindi-heading" style="font-size: 28px; margin-bottom: 4px;">गृह प्रवेश</h2>
+                    <p class="hindi-sub" style="font-size: 16px; margin-bottom: 10px;">शुभ समारोह</p>
+
+                    <div class="house-icon" style="margin: 8px auto;">
+                        <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M32 4L4 28H12V56H26V40H38V56H52V28H60L32 4Z" stroke="#c9a96e" stroke-width="2" fill="none" opacity="0.6"/>
+                            <rect x="28" y="20" width="8" height="8" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity="0.4"/>
+                            <path d="M32 4L4 28" stroke="#c9a96e" stroke-width="2" opacity="0.6"/>
+                            <path d="M32 4L60 28" stroke="#c9a96e" stroke-width="2" opacity="0.6"/>
+                        </svg>
+                    </div>
+
+                    <div class="thin-line" style="margin-bottom: 12px;"></div>
+
+                    <p class="hindi-body" style="margin-bottom: 12px; line-height: 1.9;">
+                        श्री गणेश जी की कृपा से<br>
+                        हम आपको एवं आपके परिवार को<br>
+                        अपने नवनिर्मित गृह के<br>
+                        <strong>गृह प्रवेश समारोह</strong><br>
+                        में सादर आमंत्रित करते हैं
+                    </p>
+
+                    <div class="diya-group" style="margin: 10px 0;">
+                        <span>🪔</span>
+                        <span>🪔</span>
+                        <span>🪔</span>
+                    </div>
+
+                    <div class="details-row" style="gap: 14px; padding: 16px 10px; margin-bottom: 15px;">
+                        <div class="detail-block">
+                            <div class="hindi-label">दिनांक</div>
+                            <div class="hindi-detail-val highlight" style="font-size: 17px;">17 जून, 2026</div>
+                        </div>
+                        <div class="detail-block">
+                            <div class="hindi-label">दिन</div>
+                            <div class="hindi-detail-val">बुधवार</div>
+                        </div>
+                        <div class="detail-block">
+                            <div class="hindi-label">समय</div>
+                            <div class="hindi-detail-val">सायं 7:00 बजे के पश्चात</div>
+                        </div>
+                        <div class="detail-block">
+                            <div class="hindi-label">उपरांत</div>
+                            <div class="hindi-detail-val">रात्रि भोज</div>
+                        </div>
+                    </div>
+
+                    <div class="address-block" style="margin: 10px 0 12px; padding: 12px 30px;">
+                        <div class="hindi-label" style="margin-bottom: 6px;">स्थान</div>
+                        <div class="hindi-address">
+                            स्ट्रीट 4, साईनगर, कातुलबोड़<br>
+                            दुर्ग, छत्तीसगढ़
+                        </div>
+                        <div class="hindi-landmark">झरोखा - द वेडिंग पैलेस के निकट</div>
+                    </div>
+
+                    <div class="qr-section" style="margin: 10px auto;">
+                        <div class="qr-wrapper" style="padding: 8px;">
+                            <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 90px; height: 90px; display: block;">
+                        </div>
+                        <div class="qr-text">Google Maps के लिए स्कैन करें</div>
+                    </div>
+
+                    <div class="hosted-by" style="margin-top: 10px;">
+                        <div class="hindi-label" style="margin-bottom: 4px;">आयोजक</div>
+                        <div class="host-names">संजीत मंडल एवं निशा मंडल</div>
+                    </div>
+
+                    <div class="hindi-closing" style="margin-top: 10px;">अतिथि देवो भवः</div>
+                </div>
+
+                <div class="nav-hint left">← tap English page to go back</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCurtain() {
+            const curtain = document.getElementById('curtain');
+            curtain.classList.add('open');
+            setTimeout(() => {
+                curtain.classList.add('hidden');
+            }, 2200);
+        }
+
+        function turnPage(pageNum) {
+            const page = document.getElementById('page' + pageNum);
+            page.classList.toggle('turned');
+        }
+
+        function createParticles(containerId, count) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = (50 + Math.random() * 50) + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles('particles-cover', 12);
+        createParticles('particles-inner', 10);
+        createParticles('particles-hindi', 10);
+    </script>
+</body>
+</html>
