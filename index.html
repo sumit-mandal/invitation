@@ -322,7 +322,7 @@
 
         .venue-row {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 15px;
             margin: 10px 0 15px;
             width: 100%;
@@ -343,9 +343,13 @@
         }
 
         .qr-text {
+            font-family: 'Montserrat', 'Noto Sans Devanagari', sans-serif;
             font-size: 8px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            line-height: 1.35;
+            text-align: center;
+            max-width: 96px;
             color: rgba(201, 169, 110, 0.4);
             margin-top: 12px;
         }
@@ -940,10 +944,12 @@
                             <div class="address-landmark">Near Jharokha — The Wedding Palace</div>
                         </div>
                         <div class="qr-section">
-                            <div class="qr-wrapper">
-                                <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
-                            </div>
-                            <div class="qr-text">Scan for directions</div>
+                            <a href="https://maps.app.goo.gl/qNEhi1ubP5denUP98" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration: none;">
+                                <div class="qr-wrapper" style="padding: 8px; cursor: pointer;">
+                                    <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
+                                </div>
+                                <div class="qr-text">Scan or Click for directions</div>
+                            </a>
                         </div>
                     </div>
 
@@ -1021,8 +1027,8 @@
                     </div>
 
                     <div class="venue-row">
-                        <div class="address-block" style="margin: 0; padding: 12px 20px;">
-                            <div class="hindi-label" style="margin-bottom: 6px;">स्थान</div>
+                        <div class="address-block">
+                            <div class="hindi-label" style="margin-bottom: 8px;">स्थान</div>
                             <div class="hindi-address">
                                 एलिशियम नेस्ट, स्ट्रीट 4, साईनगर, कातुलबोड़<br>
                                 दुर्ग, छत्तीसगढ़
@@ -1030,10 +1036,12 @@
                             <div class="hindi-landmark">झरोखा - द वेडिंग पैलेस के निकट</div>
                         </div>
                         <div class="qr-section">
-                            <div class="qr-wrapper" style="padding: 8px;">
-                                <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
-                            </div>
-                            <div class="qr-text">स्कैन करें</div>
+                            <a href="https://maps.app.goo.gl/qNEhi1ubP5denUP98" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration: none;">
+                                <div class="qr-wrapper" style="padding: 8px; cursor: pointer;">
+                                    <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
+                                </div>
+                                <div class="qr-text">स्कैन या क्लिक करें</div>
+                            </a>
                         </div>
                     </div>
 
