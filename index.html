@@ -34,6 +34,7 @@
             height: 82vh;
             max-height: 700px;
             position: relative;
+            z-index: 5;
             transform-style: preserve-3d;
             transition: transform 0.5s ease-out;
         }
@@ -234,6 +235,13 @@
             align-items: center;
             justify-content: flex-start;
             padding: 22px 22px 17px;
+            scrollbar-width: none; /* Hide Firefox scrollbar */
+            -ms-overflow-style: none;  /* Hide IE/Edge scrollbar */
+        }
+        .inner-content::-webkit-scrollbar {
+            display: none; /* Hide Chrome/Safari scrollbar */
+            width: 0;
+            height: 0;
         }
 
         .section-label {
@@ -358,10 +366,11 @@
         }
 
         .qr-wrapper {
-            padding: 10px;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.03);
             border: 0.5px solid rgba(201, 169, 110, 0.15);
             border-radius: 2px;
+            cursor: pointer;
         }
 
         .qr-text {
@@ -429,19 +438,19 @@
         /* Hindi page styles */
         .hindi-heading {
             font-family: 'Noto Sans Devanagari', sans-serif;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 600;
             color: #c9a96e;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             letter-spacing: 0;
         }
 
         .hindi-sub {
             font-family: 'Noto Sans Devanagari', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 300;
             color: rgba(201, 169, 110, 0.6);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .hindi-body {
@@ -449,8 +458,8 @@
             font-size: 13px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.6);
-            line-height: 2.2;
-            margin-bottom: 20px;
+            line-height: 1.9;
+            margin-bottom: 12px;
         }
 
         .hindi-body strong {
@@ -531,10 +540,10 @@
             height: 2px;
             background: rgba(201, 169, 110, 0.4);
             border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
+            animation: particleFloat 8s ease-in-out infinite;
         }
 
-        @keyframes float {
+        @keyframes particleFloat {
             0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
             25% { opacity: 0.6; }
             50% { transform: translateY(-100px) translateX(20px); opacity: 0.3; }
@@ -1047,21 +1056,31 @@
                 margin-top: 5px;
                 width: 100%;
                 display: flex;
-                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            .qr-section a {
+                display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 15px;
+                gap: 6px;
+                text-decoration: none;
+                width: auto;
             }
             .qr-wrapper {
-                padding: 6px;
+                padding: 0 !important;
+                background: none !important;
+                border: none !important;
             }
             .qr-wrapper img {
                 width: 60px !important;
                 height: 60px !important;
+                display: block;
             }
             .qr-text {
-                margin-top: 0;
-                text-align: left;
+                margin-top: 4px;
+                text-align: center;
                 max-width: 140px;
                 font-size: 8px;
             }
@@ -1142,12 +1161,130 @@
             .hosted-by {
                 margin-top: 4px;
             }
-            .sitar-strings-container {
-                margin: 4px auto;
-                height: 35px;
+        }
+
+        /* Landing Bird sitting on Nest */
+        .landing-bird {
+            position: fixed;
+            z-index: 999;
+            pointer-events: none;
+            width: 32px;
+            height: 32px;
+            opacity: 0;
+            left: -50px;
+            top: 0;
+            transform-origin: center center;
+            transform: translate(-50%, -50%);
+        }
+
+        .landing-bird .bird-body {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTMyIDM2Yy04LTQtMTYtMTYtMjQtNCA4LTEyIDE2IDAgMjQgNCA4LTQgMTYtMTYgMjQtNC04LTEyLTE2IDAtMjQgNHoiIGZpbGw9IiNjOWE5NmUiIG9wYWNpdHk9IjAuOTUiLz48L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            animation: wingFlap 0.2s ease-in-out infinite alternate;
+        }
+
+        .landing-bird.settled .bird-body {
+            animation: wingFlapSlow 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes wingFlapSlow {
+            0% {
+                transform: scaleY(0.7) translateY(1px);
             }
-            .strings-label {
-                font-size: 6px;
+            100% {
+                transform: scaleY(0.85) translateY(-1px);
+            }
+        }
+
+        /* Free Roaming Birds Background Animation */
+        .bird-container {
+            position: fixed;
+            top: 20%;
+            left: -10%;
+            z-index: 8;
+            pointer-events: none;
+        }
+
+        .bird {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTMyIDM2Yy04LTQtMTYtMTYtMjQtNCA4LTEyIDE2IDAgMjQgNCA4LTQgMTYtMTYgMjQtNC04LTEyLTE2IDAtMjQgNHoiIGZpbGw9IiNjOWE5NmUiIG9wYWNpdHk9IjAuNDUiLz48L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 38px;
+            height: 38px;
+            animation: wingFlap 0.4s ease-in-out infinite alternate;
+        }
+
+        .bird-container--one {
+            animation: flyAcrossOne 18s linear infinite;
+        }
+
+        .bird-container--two {
+            animation: flyAcrossTwo 25s linear infinite;
+            animation-delay: 6s;
+        }
+
+        .bird-container--three {
+            animation: flyAcrossThree 22s linear infinite;
+            animation-delay: 11s;
+        }
+
+        @keyframes wingFlap {
+            0% {
+                transform: scaleY(0.2) translateY(6px);
+            }
+            100% {
+                transform: scaleY(0.8) translateY(-6px);
+            }
+        }
+
+        @keyframes flyAcrossOne {
+            0% {
+                left: -10%;
+                top: 18%;
+                transform: scale(0.65);
+            }
+            50% {
+                top: 12%;
+            }
+            100% {
+                left: 110%;
+                top: 24%;
+                transform: scale(0.65);
+            }
+        }
+
+        @keyframes flyAcrossTwo {
+            0% {
+                left: -10%;
+                top: 35%;
+                transform: scale(0.4) rotate(-5deg);
+            }
+            50% {
+                top: 42%;
+            }
+            100% {
+                left: 110%;
+                top: 30%;
+                transform: scale(0.4) rotate(-5deg);
+            }
+        }
+
+        @keyframes flyAcrossThree {
+            0% {
+                left: 110%;
+                top: 12%;
+                transform: scale(0.5) scaleX(-1) rotate(5deg);
+            }
+            50% {
+                top: 20%;
+            }
+            100% {
+                left: -10%;
+                top: 8%;
+                transform: scale(0.5) scaleX(-1) rotate(5deg);
             }
         }
     </style>
@@ -1403,7 +1540,7 @@
                         </div>
                         <div class="qr-section">
                             <a href="https://maps.app.goo.gl/qNEhi1ubP5denUP98" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration: none;">
-                                <div class="qr-wrapper" style="padding: 8px; cursor: pointer;">
+                                <div class="qr-wrapper">
                                     <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
                                 </div>
                                 <div class="qr-text">Scan or Click for directions</div>
@@ -1435,13 +1572,13 @@
                 <div class="gold-corner br"></div>
                 <div class="particles" id="particles-hindi"></div>
 
-                <div class="inner-content" style="padding: 0 10px;">
-                    <div class="section-label" style="margin-bottom: 10px; letter-spacing: 1px;">|| शुभ निमंत्रण ||</div>
+                <div class="inner-content">
+                    <div class="section-label">|| शुभ निमंत्रण ||</div>
 
-                    <h2 class="hindi-heading" style="font-size: 28px; margin-bottom: 4px;">गृह प्रवेश</h2>
-                    <p class="hindi-sub" style="font-size: 16px; margin-bottom: 10px;">शुभ समारोह</p>
+                    <h2 class="hindi-heading">गृह प्रवेश</h2>
+                    <p class="hindi-sub">शुभ समारोह</p>
 
-                    <div class="house-icon" style="margin: 8px auto;">
+                    <div class="house-icon">
                         <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M32 4L4 28H12V56H26V40H38V56H52V28H60L32 4Z" stroke="#c9a96e" stroke-width="2" fill="none" opacity="0.6"/>
                             <rect x="28" y="20" width="8" height="8" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity="0.4"/>
@@ -1450,9 +1587,9 @@
                         </svg>
                     </div>
 
-                    <div class="thin-line" style="margin-bottom: 12px;"></div>
+                    <div class="thin-line"></div>
 
-                    <p class="hindi-body" style="margin-bottom: 12px; line-height: 1.9;">
+                    <p class="hindi-body">
                         श्री गणेश जी की कृपा से<br>
                         हम आपको एवं आपके परिवार को<br>
                         अपने नवनिर्मित गृह के<br>
@@ -1460,13 +1597,13 @@
                         में सादर आमंत्रित करते हैं
                     </p>
 
-                    <div class="diya-group" style="margin: 10px 0;">
+                    <div class="diya-group">
                         <span>🪔</span>
                         <span>🪔</span>
                         <span>🪔</span>
                     </div>
 
-                    <div class="details-row" style="gap: 14px; padding: 16px 10px; margin-bottom: 15px;">
+                    <div class="details-row">
                         <div class="detail-block">
                             <div class="hindi-label">दिनांक</div>
                             <div class="hindi-detail-val highlight" style="font-size: 17px;">17 जून, 2026</div>
@@ -1496,7 +1633,7 @@
                         </div>
                         <div class="qr-section">
                             <a href="https://maps.app.goo.gl/qNEhi1ubP5denUP98" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration: none;">
-                                <div class="qr-wrapper" style="padding: 8px; cursor: pointer;">
+                                <div class="qr-wrapper">
                                     <img src="https___maps.app.goo.gl_qNEhi1ubP5denUP98.png" alt="QR Code for Google Maps" style="width: 80px; height: 80px; display: block;">
                                 </div>
                                 <div class="qr-text">स्कैन या क्लिक करें</div>
@@ -1504,15 +1641,16 @@
                         </div>
                     </div>
 
-                    <div class="hosted-by" style="margin-top: 10px;">
+                    <div class="hosted-by">
                         <div class="hindi-label" style="margin-bottom: 4px;">विनीत</div>
                         <div class="host-names">संजित मंडल एवं निशा मंडल</div>
                     </div>
 
                     <div class="nav-hint">tap to start over ↺</div>
                 </div>
-
+                <div class="page-shadow"></div>
             </div>
+            <div class="page-back" style="background: #0d0d0d;"></div>
         </div>
     </div>
 
@@ -1534,6 +1672,22 @@
             <svg class="music-icon-svg" viewBox="0 0 24 24" width="18" height="18" id="actionMusicIcon"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" fill="#c9a96e"/></svg>
             <span id="musicBtnText">Mute</span>
         </button>
+    </div>
+
+    <!-- Free Roaming Birds Background Animation -->
+    <div class="bird-container bird-container--one">
+        <div class="bird"></div>
+    </div>
+    <div class="bird-container bird-container--two">
+        <div class="bird"></div>
+    </div>
+    <div class="bird-container bird-container--three">
+        <div class="bird"></div>
+    </div>
+
+    <!-- Interactive Landing Bird -->
+    <div class="landing-bird" id="landingBird">
+        <div class="bird-body"></div>
     </div>
 
     <script>
@@ -1798,28 +1952,221 @@
             }
         }
 
+        // Full fly-around and land on nest
+        function animateBirdLanding(pageId) {
+            const bird = document.getElementById('landingBird');
+            const nest = document.querySelector('#' + pageId + ' .house-icon');
+            if (!bird || !nest) return;
+            
+            bird.classList.remove('settled');
+            bird.style.transition = 'none';
+            bird.style.opacity = '1';
+            
+            // Start offscreen top-left
+            bird.style.left = '-10vw';
+            bird.style.top = '30vh';
+            bird.style.transform = 'translate(-50%, -50%) scale(0.8) rotate(25deg)';
+            
+            void bird.offsetWidth; // Reflow
+            
+            // Step 1: Fly to Top-Center
+            bird.style.transition = 'left 0.7s ease-out, top 0.7s ease-out, transform 0.7s ease-out';
+            bird.style.left = '45vw';
+            bird.style.top = '8vh';
+            bird.style.transform = 'translate(-50%, -50%) scale(0.85) rotate(10deg)';
+            
+            setTimeout(() => {
+                // Step 2: Swoop to Right-Middle
+                bird.style.transition = 'left 0.7s ease-in-out, top 0.7s ease-in-out, transform 0.7s ease-in-out';
+                bird.style.left = '85vw';
+                bird.style.top = '35vh';
+                bird.style.transform = 'translate(-50%, -50%) scale(0.75) rotate(-20deg)';
+                
+                setTimeout(() => {
+                    // Step 3: Swoop to Bottom-Center
+                    bird.style.transition = 'left 0.7s ease-in-out, top 0.7s ease-in-out, transform 0.7s ease-in-out';
+                    bird.style.left = '40vw';
+                    bird.style.top = '78vh';
+                    bird.style.transform = 'translate(-50%, -50%) scale(0.65) rotate(-45deg)';
+                    
+                    setTimeout(() => {
+                        // Step 4: Fly to Left-Middle
+                        bird.style.transition = 'left 0.6s ease-in-out, top 0.6s ease-in-out, transform 0.6s ease-in-out';
+                        bird.style.left = '12vw';
+                        bird.style.top = '48vh';
+                        bird.style.transform = 'translate(-50%, -50%) scale(0.7) rotate(20deg)';
+                        
+                        setTimeout(() => {
+                            // Step 5: Settle on Nest
+                            const rect = nest.getBoundingClientRect();
+                            const targetX = rect.left + rect.width / 2;
+                            const targetY = rect.top + rect.height / 2 - 14; // offset so it sits beautifully inside/above the nest bowl
+                            
+                            bird.style.transition = 'left 1.1s cubic-bezier(0.25, 1, 0.5, 1), top 1.1s cubic-bezier(0.25, 1, 0.5, 1), transform 1.1s cubic-bezier(0.25, 1, 0.5, 1)';
+                            bird.style.left = targetX + 'px';
+                            bird.style.top = targetY + 'px';
+                            bird.style.transform = 'translate(-50%, -50%) scale(0.5) rotate(0deg)';
+                            
+                            setTimeout(() => {
+                                bird.classList.add('settled');
+                            }, 1100);
+                        }, 600);
+                    }, 700);
+                }, 700);
+            }, 700);
+        }
+
+        // Quick loop swoop when flipping from page 2 to page 3
+        function flyToNextNest(targetPageId) {
+            const bird = document.getElementById('landingBird');
+            const nest = document.querySelector('#' + targetPageId + ' .house-icon');
+            if (!bird || !nest) return;
+            
+            bird.classList.remove('settled');
+            const startRect = bird.getBoundingClientRect();
+            
+            // Flutter up and loop
+            bird.style.transition = 'left 0.5s ease-out, top 0.5s ease-out, transform 0.5s ease-out';
+            bird.style.left = (startRect.left + startRect.width / 2 + 80) + 'px';
+            bird.style.top = (startRect.top + startRect.height / 2 - 120) + 'px';
+            bird.style.transform = 'translate(-50%, -50%) scale(0.65) rotate(-35deg)';
+            
+            setTimeout(() => {
+                // Swoop down to new nest
+                const rect = nest.getBoundingClientRect();
+                const targetX = rect.left + rect.width / 2;
+                const targetY = rect.top + rect.height / 2 - 14;
+                
+                bird.style.transition = 'left 0.8s cubic-bezier(0.25, 1, 0.5, 1), top 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                bird.style.left = targetX + 'px';
+                bird.style.top = targetY + 'px';
+                bird.style.transform = 'translate(-50%, -50%) scale(0.5) rotate(0deg)';
+                
+                setTimeout(() => {
+                    bird.classList.add('settled');
+                }, 800);
+            }, 500);
+        }
+
         function turnPage(pageNum) {
             playFlipSound();
             
-            if (pageNum === 3) {
-                resetAllPages();
-                return;
-            }
             const page = document.getElementById('page' + pageNum);
-            page.classList.toggle('turned');
+            page.classList.add('turned');
+
+            if (pageNum === 1) {
+                // Tapped cover: start full fly-round landing sequence on Page 2 nest
+                setTimeout(() => {
+                    animateBirdLanding('page2');
+                }, 400);
+                // Adjust z-index halfway through rotation to avoid clipping and raise page 2
+                setTimeout(() => {
+                    document.getElementById('page1').style.zIndex = '1';
+                    document.getElementById('page2').style.zIndex = '3';
+                    document.getElementById('page3').style.zIndex = '2';
+                }, 750);
+            } else if (pageNum === 2) {
+                // Tapped Page 2: fly to Hindi nest on Page 3
+                setTimeout(() => {
+                    flyToNextNest('page3');
+                }, 400);
+                // Adjust z-index halfway through rotation to raise page 3
+                setTimeout(() => {
+                    document.getElementById('page2').style.zIndex = '2';
+                    document.getElementById('page3').style.zIndex = '3';
+                }, 750);
+            } else if (pageNum === 3) {
+                // Tapped Page 3: animate turning the last page to the left
+                const bird = document.getElementById('landingBird');
+                if (bird) {
+                    bird.classList.remove('settled');
+                    bird.style.transition = 'opacity 0.4s';
+                    bird.style.opacity = '0';
+                }
+                // Adjust z-index halfway through rotation
+                setTimeout(() => {
+                    document.getElementById('page3').style.zIndex = '1';
+                }, 750);
+                // Wait for the page turn to complete, then auto-reset the book
+                setTimeout(() => {
+                    resetAllPages();
+                }, 2000);
+            }
         }
 
-        // Reset pages back to cover
+        // Reset pages back to cover sequentially (right-to-left)
         function resetAllPages() {
             playFlipSound();
-            const page2 = document.getElementById('page2');
             const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const page3 = document.getElementById('page3');
 
-            page2.classList.remove('turned');
+            // Page 3 starts turning back, stack it above Page 2
+            page3.style.zIndex = '3';
+            page2.style.zIndex = '2';
+            page3.classList.remove('turned');
 
             setTimeout(() => {
-                page1.classList.remove('turned');
+                // Page 2 starts turning back, stack it above Page 1
+                page2.style.zIndex = '3';
+                page1.style.zIndex = '2';
+                page2.classList.remove('turned');
+
+                setTimeout(() => {
+                    // Page 1 starts turning back, stack it above Page 2
+                    page1.style.zIndex = '3';
+                    page2.style.zIndex = '2';
+                    page1.classList.remove('turned');
+                    
+                    // After all animations finish, reset z-indices to default
+                    setTimeout(() => {
+                        page1.style.zIndex = '3';
+                        page2.style.zIndex = '2';
+                        page3.style.zIndex = '1';
+                    }, 1500);
+                }, 800);
             }, 800);
+        }
+
+        // Maintain bird alignment on window resize
+        window.addEventListener('resize', () => {
+            const bird = document.getElementById('landingBird');
+            if (bird && bird.classList.contains('settled')) {
+                const activePage = document.getElementById('page2').classList.contains('turned') ? 'page3' : 'page2';
+                const nest = document.querySelector('#' + activePage + ' .house-icon');
+                if (nest) {
+                    const rect = nest.getBoundingClientRect();
+                    bird.style.transition = 'none';
+                    bird.style.left = (rect.left + rect.width / 2) + 'px';
+                    bird.style.top = (rect.top + rect.height / 2 - 14) + 'px';
+                    bird.style.transform = 'translate(-50%, -50%) scale(0.5) rotate(0deg)';
+                }
+            }
+        });
+
+        function downloadCalendarICS() {
+            const icsContent = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Griha Pravesh//Invitation//EN
+BEGIN:VEVENT
+UID:grihapravesh20260617
+DTSTAMP:20260528T070000Z
+DTSTART:20260617T053000Z
+DTEND:20260617T163000Z
+SUMMARY:Griha Pravesh Ceremony (Sanjit & Nisha)
+DESCRIPTION:Join us for the auspicious occasion of our Housewarming Ceremony. Dinner post 7:00 PM.
+LOCATION:Elysium Nest, Street 4, Sainagar, Katulbod, Durg, Chhattisgarh
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Griha_Pravesh_Invitation.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function createParticles(containerId, count) {
@@ -1878,32 +2225,6 @@
                 book.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
             }
         });
-
-        // Download ICS calendar file
-        function downloadCalendarICS() {
-            const icsContent = 
-`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Griha Pravesh//Invitation//EN
-BEGIN:VEVENT
-UID:grihapravesh20260617
-DTSTAMP:20260528T070000Z
-DTSTART:20260617T053000Z
-DTEND:20260617T163000Z
-SUMMARY:Griha Pravesh Ceremony (Sanjit & Nisha)
-DESCRIPTION:Join us for the auspicious occasion of our Housewarming Ceremony. Dinner post 7:00 PM.
-LOCATION:Elysium Nest, Street 4, Sainagar, Katulbod, Durg, Chhattisgarh
-END:VEVENT
-END:VCALENDAR`;
-
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'Griha_Pravesh_Invitation.ics';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
 
         createParticles('particles-cover', 12);
         createParticles('particles-inner', 10);
