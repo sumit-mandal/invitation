@@ -29,10 +29,13 @@
         }
 
         .book-container {
-            width: 600px;
-            height: 96vh;
+            width: 90vw;
+            max-width: 500px;
+            height: 82vh;
+            max-height: 700px;
             position: relative;
             transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
         }
 
         .page {
@@ -68,12 +71,10 @@
         /* Cover Page */
         .cover {
             background: #0d0d0d;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
 
         .cover::before {
@@ -98,6 +99,16 @@
         .cover-content {
             text-align: center;
             z-index: 1;
+            position: absolute;
+            top: 28px;
+            bottom: 28px;
+            left: 28px;
+            right: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
         }
 
         .cover-om {
@@ -140,6 +151,8 @@
         .cover-tap {
             position: absolute;
             bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
             font-size: 11px;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -155,14 +168,10 @@
         /* Inner Page */
         .inner-page {
             background: #0d0d0d;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 40px 40px 35px;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
 
         .inner-page::before {
@@ -211,7 +220,20 @@
         .inner-content {
             text-align: center;
             z-index: 1;
-            width: 100%;
+            position: absolute;
+            top: 18px;
+            bottom: 18px;
+            left: 18px;
+            right: 18px;
+            width: auto;
+            height: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 22px 22px 17px;
         }
 
         .section-label {
@@ -706,9 +728,443 @@
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.7; }
         }
+
+        /* Foil Shine Effect */
+        .foil-shine {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 30%, rgba(201, 169, 110, 0.12) 50%, transparent 70%);
+            background-size: 200% 200%;
+            background-position: 0% 0%;
+            pointer-events: none;
+            mix-blend-mode: color-dodge;
+            z-index: 10;
+            border-radius: 2px;
+            transition: opacity 0.5s;
+            opacity: 0.8;
+        }
+
+        /* Interactive Sitar Strings */
+        .sitar-strings-container {
+            width: 100%;
+            max-width: 280px;
+            height: 45px;
+            margin: 12px auto 6px;
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            padding: 5px 10px;
+            background: rgba(201, 169, 110, 0.03);
+            border: 0.5px solid rgba(201, 169, 110, 0.15);
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            z-index: 20;
+        }
+        .sitar-string {
+            width: 15%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .sitar-string::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1.5px;
+            background: linear-gradient(180deg, #8a6d3b, #c9a96e, #8a6d3b);
+            box-shadow: 0 0 5px rgba(201, 169, 110, 0.4);
+            transition: transform 0.1s ease-out, background 0.1s;
+        }
+        .sitar-string.plucked::after {
+            animation: pluckWobble 0.8s ease-out;
+            background: #fff;
+        }
+        @keyframes pluckWobble {
+            0% { transform: translateX(0); }
+            10% { transform: translateX(-4px); }
+            30% { transform: translateX(3px); }
+            50% { transform: translateX(-2px); }
+            70% { transform: translateX(1px); }
+            100% { transform: translateX(0); }
+        }
+        .sitar-fretboard-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 0.5px;
+            background: rgba(201, 169, 110, 0.3);
+            pointer-events: none;
+        }
+        .strings-label {
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 7px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 110, 0.4);
+            pointer-events: none;
+        }
+
+        /* Floating Action Bar */
+        .action-bar {
+            position: fixed;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 480px;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 0.5px solid rgba(201, 169, 110, 0.25);
+            border-radius: 30px;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            transition: bottom 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .action-bar.visible {
+            bottom: 20px;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            padding: 6px 10px;
+            border-radius: 15px;
+        }
+        .action-btn:hover {
+            color: #c9a96e;
+            background: rgba(201, 169, 110, 0.08);
+            transform: translateY(-2px);
+        }
+        .action-btn svg {
+            transition: transform 0.3s;
+        }
+        .action-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* Floating Music Button (Fallback/Traditional icon) */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(13, 13, 13, 0.8);
+            border: 0.5px solid rgba(201, 169, 110, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .music-toggle.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .music-toggle:hover {
+            transform: scale(1.1);
+            border-color: rgba(201, 169, 110, 0.7);
+            box-shadow: 0 0 10px rgba(201, 169, 110, 0.3);
+        }
+        .music-icon-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .music-waves {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            animation: musicPulse 2s linear infinite;
+            opacity: 0;
+        }
+        .music-waves span {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            animation: musicPulse 2s linear infinite;
+            animation-delay: 0.6s;
+        }
+        .music-toggle.playing .music-waves {
+            opacity: 1;
+        }
+        @keyframes musicPulse {
+            0% { transform: scale(0.95); opacity: 1; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 600px) {
+            .book-container {
+                width: 92vw;
+                height: 80vh;
+            }
+            .action-bar {
+                width: 94%;
+                padding: 8px 10px;
+            }
+            .action-btn {
+                padding: 4px 6px;
+                font-size: 8px;
+                letter-spacing: 0.5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cover-border { inset: 12px; }
+            .cover-border-inner { inset: 18px; }
+            .inner-border { inset: 10px; }
+            
+            .gold-corner.tl { top: 14px; left: 14px; }
+            .gold-corner.tr { top: 14px; right: 14px; }
+            .gold-corner.bl { bottom: 14px; left: 14px; }
+            .gold-corner.br { bottom: 14px; right: 14px; }
+            
+            .cover-content {
+                top: 18px;
+                bottom: 18px;
+                left: 18px;
+                right: 18px;
+                padding: 6px;
+            }
+            
+            .inner-content {
+                top: 10px;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                padding: 14px 10px 10px;
+            }
+            
+            .cover-title {
+                font-size: 34px;
+                letter-spacing: 4px;
+            }
+            .cover-subtitle {
+                font-size: 20px;
+            }
+            .cover-om {
+                font-size: 42px;
+                margin-bottom: 15px;
+            }
+            .cover-line {
+                margin: 15px auto;
+                width: 90px;
+            }
+            
+            .invite-heading {
+                font-size: 22px;
+                letter-spacing: 2px;
+            }
+            .invite-sub {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+            .thin-line {
+                margin-bottom: 8px;
+            }
+            .invite-body {
+                font-size: 11px;
+                line-height: 1.6;
+                margin-bottom: 8px;
+            }
+            .diya-group {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+            .details-row {
+                gap: 8px;
+                padding: 10px 8px;
+                margin-bottom: 10px;
+            }
+            .detail-val {
+                font-size: 13px;
+            }
+            .detail-val.highlight {
+                font-size: 15px;
+            }
+            .detail-label {
+                font-size: 7px;
+                letter-spacing: 2px;
+            }
+            
+            .venue-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                margin: 5px 0 10px;
+            }
+            .address-block {
+                padding: 0;
+                border-left: none;
+                text-align: center;
+                width: 100%;
+            }
+            .address-text {
+                font-size: 11px;
+                line-height: 1.6;
+            }
+            .address-landmark {
+                font-size: 10px;
+                margin-top: 4px;
+            }
+            .qr-section {
+                margin-top: 5px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+            }
+            .qr-wrapper {
+                padding: 6px;
+            }
+            .qr-wrapper img {
+                width: 60px !important;
+                height: 60px !important;
+            }
+            .qr-text {
+                margin-top: 0;
+                text-align: left;
+                max-width: 140px;
+                font-size: 8px;
+            }
+            .hosted-by {
+                margin-top: 8px;
+            }
+            .host-names {
+                font-size: 16px;
+            }
+            
+            /* Hindi styles */
+            .hindi-heading {
+                font-size: 24px !important;
+            }
+            .hindi-sub {
+                font-size: 15px !important;
+                margin-bottom: 10px !important;
+            }
+            .hindi-body {
+                font-size: 11px !important;
+                line-height: 1.8 !important;
+                margin-bottom: 8px !important;
+            }
+            .hindi-detail-val {
+                font-size: 13px !important;
+            }
+            .hindi-detail-val.highlight {
+                font-size: 15px !important;
+            }
+            .hindi-address {
+                font-size: 11px !important;
+                line-height: 1.6 !important;
+            }
+            .hindi-landmark {
+                font-size: 10px !important;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .book-container {
+                height: 82vh;
+            }
+            .cover-content {
+                padding: 6px 12px;
+            }
+            .inner-content {
+                padding: 12px 20px 10px;
+            }
+            .cover-om {
+                margin-bottom: 10px;
+                font-size: 36px;
+            }
+            .cover-title {
+                font-size: 30px;
+            }
+            .invite-heading {
+                font-size: 20px;
+            }
+            .invite-sub {
+                margin-bottom: 6px;
+                font-size: 16px;
+            }
+            .invite-body {
+                margin-bottom: 6px;
+                line-height: 1.5;
+            }
+            .diya-group {
+                margin: 2px 0;
+            }
+            .details-row {
+                margin-bottom: 8px;
+                padding: 6px 8px;
+                gap: 6px;
+            }
+            .venue-row {
+                margin: 4px 0 8px;
+            }
+            .hosted-by {
+                margin-top: 4px;
+            }
+            .sitar-strings-container {
+                margin: 4px auto;
+                height: 35px;
+            }
+            .strings-label {
+                font-size: 6px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Floating Music Button -->
+    <div class="music-toggle" id="musicToggleBtn" onclick="toggleMusic(event)">
+        <div class="music-icon-wrapper">
+            <svg class="music-icon-svg" viewBox="0 0 24 24" width="22" height="22">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" fill="#c9a96e"/>
+            </svg>
+            <div class="music-waves">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
     <!-- Theatre Curtain Overlay -->
     <div class="curtain-overlay" id="curtain" onclick="openCurtain()">
         <div class="theatre-frame"></div>
@@ -859,6 +1315,7 @@
         <!-- Page 1: Cover -->
         <div class="page" id="page1" onclick="turnPage(1)">
             <div class="page-front cover">
+                <div class="foil-shine"></div>
                 <div class="cover-border"></div>
                 <div class="cover-border-inner"></div>
                 <div class="particles" id="particles-cover"></div>
@@ -878,6 +1335,7 @@
         <!-- Page 2: English Invitation -->
         <div class="page" id="page2" onclick="turnPage(2)">
             <div class="page-front inner-page">
+                <div class="foil-shine"></div>
                 <div class="inner-border"></div>
                 <div class="gold-corner tl"></div>
                 <div class="gold-corner tr"></div>
@@ -969,6 +1427,7 @@
         <!-- Page 3: Hindi Invitation -->
         <div class="page" id="page3" onclick="turnPage(3)">
             <div class="page-front inner-page">
+                <div class="foil-shine"></div>
                 <div class="inner-border"></div>
                 <div class="gold-corner tl"></div>
                 <div class="gold-corner tr"></div>
@@ -1057,19 +1516,291 @@
         </div>
     </div>
 
+    <!-- Floating Action Bar -->
+    <div class="action-bar" id="actionBar">
+        <a href="https://maps.app.goo.gl/qNEhi1ubP5denUP98" target="_blank" rel="noopener noreferrer" class="action-btn" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#c9a96e"/></svg>
+            <span>Directions</span>
+        </a>
+        <a href="https://api.whatsapp.com/send?text=Hi%20Sanjit%20%26%20Nisha%2C%20thank%20you%20for%20the%20invite.%20I%20would%20love%20to%20attend%20your%20Griha%20Pravesh%20on%20June%2017%21" target="_blank" rel="noopener noreferrer" class="action-btn" onclick="event.stopPropagation()">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" fill="#c9a96e"/></svg>
+            <span>RSVP</span>
+        </a>
+        <button class="action-btn" onclick="downloadCalendarICS(); event.stopPropagation();">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z" fill="#c9a96e"/></svg>
+            <span>Calendar</span>
+        </button>
+        <button class="action-btn" onclick="toggleMusic(event); event.stopPropagation();">
+            <svg class="music-icon-svg" viewBox="0 0 24 24" width="18" height="18" id="actionMusicIcon"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" fill="#c9a96e"/></svg>
+            <span id="musicBtnText">Mute</span>
+        </button>
+    </div>
+
     <script>
         let currentPage = 0;
         const totalPages = 3;
+        let audioContextInitialized = false;
+        let synth = null;
+        let isMuted = false;
+
+        // Custom Ambient Pad Synthesizer using Web Audio API (warm meditative backing chords)
+        class AmbientPadSynth {
+            constructor() {
+                this.ctx = null;
+                this.isPlaying = false;
+                this.droneNodes = [];
+            }
+            
+            init() {
+                if (this.ctx) return;
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                this.masterVolume = this.ctx.createGain();
+                this.masterVolume.gain.value = 0.08; // Soft meditative volume level
+                this.masterVolume.connect(this.ctx.destination);
+                
+                audioContextInitialized = true;
+            }
+            
+            start() {
+                this.init();
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                
+                // Meditative warm chord: C#3 (138.59Hz), G#3 (207.65Hz), C#4 (277.18Hz), F4 (349.23Hz)
+                this.startDrone(138.59, 0.45);
+                this.startDrone(207.65, 0.35);
+                this.startDrone(277.18, 0.25);
+                this.startDrone(349.23, 0.20);
+            }
+            
+            stop() {
+                this.isPlaying = false;
+                this.droneNodes.forEach(node => {
+                    try {
+                        node.osc.stop();
+                    } catch(e){}
+                });
+                this.droneNodes = [];
+            }
+            
+            startDrone(freq, volume) {
+                const osc1 = this.ctx.createOscillator();
+                const osc2 = this.ctx.createOscillator();
+                const gainNode = this.ctx.createGain();
+                const filter = this.ctx.createBiquadFilter();
+                
+                osc1.type = 'triangle';
+                osc1.frequency.value = freq;
+                
+                // Slight detuning for a rich, warm chorus effect
+                osc2.type = 'triangle';
+                osc2.frequency.value = freq + 0.5;
+                
+                gainNode.gain.setValueAtTime(0, this.ctx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(volume * 0.15, this.ctx.currentTime + 3.0); // Slow fade swell
+                
+                filter.type = 'lowpass';
+                filter.frequency.value = 320; // Filter high frequencies for a warm analog pad feel
+                
+                osc1.connect(filter);
+                osc2.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(this.masterVolume);
+                
+                osc1.start();
+                osc2.start();
+                this.droneNodes.push({ osc: osc1, gainNode });
+                this.droneNodes.push({ osc: osc2, gainNode });
+            }
+        }
+
+        // Suspense Curtain Opening Sound Effect
+        function playSuspenseCurtainSound() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!ctx) return;
+            
+            const now = ctx.currentTime;
+            
+            // Master gain to control the dramatic volume swell
+            const masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0, now);
+            masterGain.gain.linearRampToValueAtTime(0.25, now + 1.8);
+            masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.2);
+            masterGain.connect(ctx.destination);
+            
+            // 1. Deep Sub-bass tension rumble
+            const subOsc = ctx.createOscillator();
+            const subGain = ctx.createGain();
+            subOsc.type = 'sine';
+            subOsc.frequency.setValueAtTime(65.4, now); // C2
+            subOsc.frequency.linearRampToValueAtTime(55.0, now + 2.0); // low slide
+            
+            subGain.gain.setValueAtTime(0, now);
+            subGain.gain.linearRampToValueAtTime(0.8, now + 1.2);
+            subGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+            
+            subOsc.connect(subGain);
+            subGain.connect(masterGain);
+            subOsc.start(now);
+            subOsc.stop(now + 3.0);
+            
+            // 2. Rising string-like tension cluster (sawtooth + triangle detuned and filtered)
+            const riseOsc1 = ctx.createOscillator();
+            const riseOsc2 = ctx.createOscillator();
+            const riseGain = ctx.createGain();
+            
+            riseOsc1.type = 'sawtooth';
+            riseOsc1.frequency.setValueAtTime(110.0, now); // A2
+            riseOsc1.frequency.exponentialRampToValueAtTime(440.0, now + 2.0); // Sweep up to A4
+            
+            riseOsc2.type = 'triangle';
+            riseOsc2.frequency.setValueAtTime(111.0, now); // slightly detuned
+            riseOsc2.frequency.exponentialRampToValueAtTime(442.0, now + 2.0);
+            
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(180, now);
+            filter.frequency.exponentialRampToValueAtTime(750, now + 2.0); // Sweep filter along with pitch
+            
+            riseGain.gain.setValueAtTime(0, now);
+            riseGain.gain.linearRampToValueAtTime(0.4, now + 1.8);
+            riseGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+            
+            riseOsc1.connect(filter);
+            riseOsc2.connect(filter);
+            filter.connect(riseGain);
+            riseGain.connect(masterGain);
+            
+            riseOsc1.start(now);
+            riseOsc2.start(now);
+            riseOsc1.stop(now + 3.0);
+            riseOsc2.stop(now + 3.0);
+            
+            // 3. Shimmering chimes burst at the opening climax (around 1.8s)
+            const chimeFreqs = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5 major arpeggio
+            chimeFreqs.forEach((freq, index) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + 1.5 + (index * 0.06)); // arpeggiated entry
+                
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.setValueAtTime(0, now + 1.5 + (index * 0.06));
+                gain.gain.linearRampToValueAtTime(0.12, now + 1.5 + (index * 0.06) + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8 + (index * 0.12));
+                
+                osc.connect(gain);
+                gain.connect(masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 4.0);
+            });
+        }
+
+        // Procedural Page Flip sound effect
+        function playFlipSound() {
+            if (!audioContextInitialized || isMuted) return;
+            const ctx = synth.ctx || new (window.AudioContext || window.webkitAudioContext)();
+            if (!ctx) return;
+            
+            const now = ctx.currentTime;
+            const bufferSize = ctx.sampleRate * 0.45;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            
+            const noiseSource = ctx.createBufferSource();
+            noiseSource.buffer = buffer;
+            
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1200, now);
+            filter.Q.setValueAtTime(1.8, now);
+            filter.frequency.exponentialRampToValueAtTime(450, now + 0.4);
+            
+            const gainNode = ctx.createGain();
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(0.06, now + 0.06);
+            gainNode.gain.exponentialRampToValueAtTime(0.012, now + 0.22);
+            gainNode.gain.linearRampToValueAtTime(0.035, now + 0.28);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+            
+            noiseSource.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            noiseSource.start(now);
+        }
+
+        synth = new AmbientPadSynth();
 
         function openCurtain() {
             const curtain = document.getElementById('curtain');
             curtain.classList.add('open');
+            
+            // Play suspense opening sound effect immediately upon click
+            if (!isMuted) {
+                playSuspenseCurtainSound();
+            }
+            
+            // Start background ambient pad and reveal action bar
             setTimeout(() => {
                 curtain.classList.add('hidden');
-            }, 2200);
+                document.getElementById('musicToggleBtn').classList.add('visible');
+                document.getElementById('actionBar').classList.add('visible');
+                
+                if (!isMuted) {
+                    synth.start();
+                }
+                updateMusicUI();
+            }, 1200);
+        }
+
+        function toggleMusic(event) {
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            synth.init();
+            isMuted = !isMuted;
+            
+            if (isMuted) {
+                synth.stop();
+            } else {
+                synth.start();
+            }
+            updateMusicUI();
+        }
+
+        function updateMusicUI() {
+            const toggleBtn = document.getElementById('musicToggleBtn');
+            const actionIcon = document.getElementById('actionMusicIcon');
+            const actionText = document.getElementById('musicBtnText');
+            
+            if (isMuted) {
+                toggleBtn.classList.remove('playing');
+                toggleBtn.classList.add('muted');
+                if (actionText) actionText.innerText = "Play";
+                if (actionIcon) actionIcon.querySelector('path').style.fill = '#555';
+            } else {
+                toggleBtn.classList.add('playing');
+                toggleBtn.classList.remove('muted');
+                if (actionText) actionText.innerText = "Mute";
+                if (actionIcon) actionIcon.querySelector('path').style.fill = '#c9a96e';
+            }
         }
 
         function turnPage(pageNum) {
+            playFlipSound();
+            
             if (pageNum === 3) {
                 resetAllPages();
                 return;
@@ -1078,7 +1809,9 @@
             page.classList.toggle('turned');
         }
 
+        // Reset pages back to cover
         function resetAllPages() {
+            playFlipSound();
             const page2 = document.getElementById('page2');
             const page1 = document.getElementById('page1');
 
@@ -1101,6 +1834,75 @@
                 particle.style.animationDuration = (6 + Math.random() * 4) + 's';
                 container.appendChild(particle);
             }
+        }
+
+        // Foil shine movement and 3D Tilt
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            const shines = document.querySelectorAll('.foil-shine');
+            shines.forEach(shine => {
+                const px = (x * 100) + '%';
+                const py = (y * 100) + '%';
+                shine.style.backgroundPosition = `${px} ${py}`;
+            });
+            
+            const book = document.querySelector('.book-container');
+            if (book && window.innerWidth > 768) {
+                const tiltX = (y - 0.5) * 12; // tilt back/forth
+                const tiltY = (x - 0.5) * -12; // tilt left/right
+                book.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            }
+        });
+
+        // Mobile gyroscope orientation for foil shine & subtle tilt
+        window.addEventListener('deviceorientation', (e) => {
+            const roll = e.gamma || 0;  // -90 to 90
+            const pitch = e.beta || 0;  // -180 to 180
+            
+            const x = (roll + 30) / 60;
+            const y = (pitch - 20) / 60;
+            
+            const shines = document.querySelectorAll('.foil-shine');
+            shines.forEach(shine => {
+                const px = Math.max(0, Math.min(100, x * 100)) + '%';
+                const py = Math.max(0, Math.min(100, y * 100)) + '%';
+                shine.style.backgroundPosition = `${px} ${py}`;
+            });
+            
+            const book = document.querySelector('.book-container');
+            if (book && window.innerWidth <= 768) {
+                const tiltX = Math.max(-8, Math.min(8, (pitch - 45) * 0.25));
+                const tiltY = Math.max(-8, Math.min(8, roll * 0.25));
+                book.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            }
+        });
+
+        // Download ICS calendar file
+        function downloadCalendarICS() {
+            const icsContent = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Griha Pravesh//Invitation//EN
+BEGIN:VEVENT
+UID:grihapravesh20260617
+DTSTAMP:20260528T070000Z
+DTSTART:20260617T053000Z
+DTEND:20260617T163000Z
+SUMMARY:Griha Pravesh Ceremony (Sanjit & Nisha)
+DESCRIPTION:Join us for the auspicious occasion of our Housewarming Ceremony. Dinner post 7:00 PM.
+LOCATION:Elysium Nest, Street 4, Sainagar, Katulbod, Durg, Chhattisgarh
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Griha_Pravesh_Invitation.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         createParticles('particles-cover', 12);
